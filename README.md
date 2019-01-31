@@ -31,4 +31,4 @@ Start it
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Thanks
-Thanks to @PichotM (https://github.com/PichotM) for the vocal script 
+Thanks to @PichotM (https://github.com/PichotM) for the voice script 
