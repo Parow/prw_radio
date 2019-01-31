@@ -30,7 +30,7 @@ Start it
 ## Usage
 
 
-  ctrl + H to open the radio
+  CTRL + H to open the radio
 
 
 ## Contributing
