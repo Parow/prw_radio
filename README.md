@@ -2,6 +2,8 @@
 
 This script is a radio to replace teamspeak or even discord
 
+Don't ask for esx support or something else if you want something do it yourself
+
 ## Required
 
 NativeUI (https://github.com/iTexZoz/NativeUILua-Reloaded or https://github.com/FrazzIe/NativeUILua)
