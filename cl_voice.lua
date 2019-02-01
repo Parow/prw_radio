@@ -1,3 +1,10 @@
+_menuPool = NativeUI.CreatePool()
+mainMenu = NativeUI.CreateMenu("Radio", "Frequency", 5, 200)
+_menuPool:Add(mainMenu)
+local radioMenu = nil
+local muet = true
+local freq = nil
+
 local VoiceMode = {
 	{ dist = 3, message = "Voice range set on 3 meters." },
 	{ dist = 8, message = "Voice range set on 8 meters." },
@@ -177,60 +184,10 @@ AddEventHandler('parow:SyncRadio', function(azz,bool)
 
 	end
 end)
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-
-		if IsControlJustPressed(1, 56) then
-			UpdateVocalMode()
-		end
-        if IsControlPressed(0, Keys["LEFTCTRL"]) and IsControlPressed(0, Keys["H"]) then
-
-            OpenRadioMenu()
-        end
-		if IsControlPressed(1, 56) then
-			
-			local ped = GetPlayerPed(-1)
-			local headPos = GetPedBoneCoords(ped, 12844, .0, .0, .0)
-
-			for _,v in pairs(GetPlayers()) do
-				local otherPed = GetPlayerPed(v)
-				if otherPed and Voice.Listeners[GetPlayerServerId(v)] then
-					local entPos = GetEntityCoords(otherPed)
-					DrawText3D(entPos.x, entPos.y, entPos.z, true)
-				end
-			end
-
-			local distance = Voice.distance + .0
-			DrawMarker(28, headPos, 0.0, 0.0, 0.0, 0.0, 0.0, .0, distance + .0, distance + .0, distance + .0, 20, 192, 255, 70, 0, 0, 2, 0, 0, 0, 0)
-		end
-	end
-end)
-
 
 --------
 --MENU--
 --------
-local _menuPool = NativeUI.CreatePool()
-_menuPool:RefreshIndex()
-local radioMenu = nil
-local muet = true
-local freq = nil
-function OpenRadioMenu()
-
-    if radioMenu == nil then
-        radioMenu = NativeUI.CreateMenu("Radio", "Frequency", 5, 200)
-        _menuPool:Add(radioMenu)
-
-		AddRadioMenu(radioMenu)
-		radioMenu:Visible(true)
-    end
-    if not _menuPool:IsAnyMenuOpen() then
-		radioMenu:Visible(true)
-    else
-        _menuPool:CloseAllMenus()
-    end
-end
 function AddRadioMenu(menu)
 
     pp = NativeUI.CreateItem('Frequency', "")
@@ -247,7 +204,7 @@ function AddRadioMenu(menu)
                     dm = round2(dm, 2)
                     if dm <= 100 then
                         if freq == nil then
-                            vali = NativeUI.CreateItem("Valider", "")
+                            local vali = NativeUI.CreateItem("Valider", "")
                             m:AddItem(vali)
                             _menuPool:RefreshIndex()
                             m:CurrentSelection(ind - 1)
@@ -310,9 +267,36 @@ function gettxt2(txtt)
     end
 
 end
+
+AddRadioMenu(mainMenu)
+_menuPool:RefreshIndex()
+
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		_menuPool:ProcessMenus()
+		if IsControlJustPressed(1, 56) then
+			UpdateVocalMode()
+		end
+        if IsControlJustPressed(1, 51) then
+			print("TRUE TRUE TRUE")
+			mainMenu:Visible(not mainMenu:Visible())
+        end
+		if IsControlPressed(1, 56) then
+			
+			local ped = GetPlayerPed(-1)
+			local headPos = GetPedBoneCoords(ped, 12844, .0, .0, .0)
+
+			for _,v in pairs(GetPlayers()) do
+				local otherPed = GetPlayerPed(v)
+				if otherPed and Voice.Listeners[GetPlayerServerId(v)] then
+					local entPos = GetEntityCoords(otherPed)
+					DrawText3D(entPos.x, entPos.y, entPos.z, true)
+				end
+			end
+
+			local distance = Voice.distance + .0
+			DrawMarker(28, headPos, 0.0, 0.0, 0.0, 0.0, 0.0, .0, distance + .0, distance + .0, distance + .0, 20, 192, 255, 70, 0, 0, 2, 0, 0, 0, 0)
+		end
 	end
 end)
