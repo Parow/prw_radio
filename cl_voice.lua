@@ -215,11 +215,13 @@ local radioMenu = nil
 local muet = true
 local freq = nil
 function OpenRadioMenu()
+
     if radioMenu == nil then
-        radioMenu = NativeUI.CreateMenu("", "RADIO", 5, 200)
+        radioMenu = NativeUI.CreateMenu("Radio", "Frequency", 5, 200)
         _menuPool:Add(radioMenu)
 
-        AddRadioMenu(radioMenu)
+		AddRadioMenu(radioMenu)
+		radioMenu:Visible(true)
     end
     if not _menuPool:IsAnyMenuOpen() then
 		radioMenu:Visible(true)
@@ -228,6 +230,7 @@ function OpenRadioMenu()
     end
 end
 function AddRadioMenu(menu)
+
     pp = NativeUI.CreateItem('Frequency', "")
     pp:RightLabel(freq)
     menu:AddItem(pp)
@@ -284,3 +287,10 @@ end
 
 
 
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+		_menuPool:ProcessMenus()
+	end
+end)
