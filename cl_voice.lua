@@ -287,7 +287,27 @@ end
 
 
 
+function gettxt2(txtt)
+    AddTextEntry('FMMC_MPM_NA', "Texte")
+    DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", txtt, "", "", "", 100)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+		local result = GetOnscreenKeyboardResult()
+		if tonumber(result) ~= nil then
+			if tonumber(result) > 1 then
+				return result
+			else
 
+			end
+		else
+		return result
+		end
+    end
+
+end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
