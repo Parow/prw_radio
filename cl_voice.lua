@@ -215,6 +215,7 @@ local _menuPool = NativeUI.CreatePool()
 _menuPool:RefreshIndex()
 local radioMenu = nil
 local muet = true
+local ppks = nil
 local freq = nil
 function OpenRadioMenu()
 
@@ -253,7 +254,7 @@ function AddRadioMenu(menu)
                             m:CurrentSelection(ind - 1)
                         end
                         freq = tonumber(dm)
-                        i:RightLabel(dm)
+                        pp:RightLabel(dm)
                     else
                         drawnotifcolor("Frequency range incorrect (range 0 to 100)", 6)
                     end
@@ -262,12 +263,15 @@ function AddRadioMenu(menu)
         end
 
         if ind == 2 then
-            drawnotifcolor("Frequency set to" .. freq, 18)
+            drawnotifcolor("Frequency set to " .. freq, 18)
             TriggerServerEvent("parow:SetFreq", freq)
-            _menuPool:RefreshIndex()
-            menu:RemoveItemAt(3)
-            menu:AddItem(NativeUI.CreateCheckboxItem('Radio status', muet, ""))
-            _menuPool:RefreshIndex()
+			_menuPool:RefreshIndex()
+			if ppks == nil then
+			--menu:RemoveItemAt(3)
+			ppks = NativeUI.CreateCheckboxItem('Radio status', muet, "")
+            menu:AddItem(ppks)
+			_menuPool:RefreshIndex()
+			end
         end
 
     end
