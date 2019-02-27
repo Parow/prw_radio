@@ -20,6 +20,7 @@ Voice.Listeners = {}
 Voice.ListenersRadio = {}
 Voice.Mode = 2
 Voice.distance = 8.0
+local currentFreq
 Voice.onlyVehicle = false
 local muted = false
 local function SendVoiceToPlayer(intPlayer, boolSend)
@@ -212,7 +213,7 @@ AddEventHandler('parow:SyncRadio2', function(azz)
 	for i = 1,#azz,1 do
 	--	print(azz[i].freq)
 	--	print(CurrentFreq)
-		if azz[i].freq == CurrentFreq then
+		if azz[i].freq == currentFreq then
 			Voice.ListenersRadio[azz[i].source] = true
 		else
 			Voice.ListenersRadio[azz[i].source] = false
@@ -267,6 +268,7 @@ function AddRadioMenu(menu)
                             m:CurrentSelection(ind - 1)
                         end
                         freq = tonumber(dm)
+						
                         pp:RightLabel(dm)
                     else
                         drawnotifcolor("Frequency range incorrect (range 0 to 100)", 6)
@@ -281,6 +283,7 @@ function AddRadioMenu(menu)
 			_menuPool:RefreshIndex()
 			if ppks == nil then
 			--menu:RemoveItemAt(3)
+				currentFreq = freq
 			ppks = NativeUI.CreateCheckboxItem('Radio status', muet, "")
             menu:AddItem(ppks)
 			_menuPool:RefreshIndex()
