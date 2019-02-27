@@ -206,7 +206,20 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+RegisterNetEvent('parow:SyncRadio2')
+AddEventHandler('parow:SyncRadio2', function(azz)
+--	print(json.encode(azz))
+	for i = 1,#azz,1 do
+	--	print(azz[i].freq)
+	--	print(CurrentFreq)
+		if azz[i].freq == CurrentFreq then
+			Voice.ListenersRadio[azz[i].source] = true
+		else
+			Voice.ListenersRadio[azz[i].source] = false
+		end
 
+	end
+end)
 
 --------
 --MENU--
