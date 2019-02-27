@@ -36,7 +36,7 @@ AddEventHandler('parow:SetFreq', function(freq)
 	end
 end)
 function SyncRadio()
-	print("sync")
+
 
 	TriggerClientEvent("parow:SyncRadio2",-1,voip)
 	SetTimeout(5000, SyncRadio)
